@@ -1,0 +1,9 @@
+the results are different because vfork blocks the parent..
+
+
+
+Assignment D::
+
+It is different because thread 1 might be blocked before it sets val2 to val1.....
+
+
