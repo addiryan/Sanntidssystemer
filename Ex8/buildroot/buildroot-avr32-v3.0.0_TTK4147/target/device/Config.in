@@ -1,0 +1,20 @@
+menu "Target options"
+
+# Boards may select this to remove some features that are only useful on
+# targets that have a virtual console.
+config BR2_BOARD_IS_HEADLESS
+	bool
+
+comment "Preset Devices"
+
+source "target/device/ARMLTD/Config.in"
+source "target/device/Atmel/Config.in"
+source "target/device/KwikByte/Config.in"
+source "target/device/valka/Config.in"
+source "target/device/x86/Config.in"
+source "target/device/xtensa/Config.in"
+
+# This must be last
+source "target/generic/Config.in"
+
+endmenu

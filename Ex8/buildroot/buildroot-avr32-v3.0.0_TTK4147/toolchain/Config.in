@@ -1,0 +1,25 @@
+menu "Toolchain"
+choice
+	prompt "Toolchain type"
+	help
+	  Select whether to use the toolchain provided by buildroot
+	  or an external toolchain.
+
+	  Some vendors provide toolchains in binary form, some in
+	  source form.
+
+config BR2_TOOLCHAIN_BUILDROOT
+	bool "Buildroot toolchain"
+
+config BR2_TOOLCHAIN_EXTERNAL
+	bool "External toolchain"
+
+endchoice
+
+source "toolchain/toolchain-buildroot/Config.in"
+source "toolchain/toolchain-external/Config.in"
+source "toolchain/toolchain-common.in"
+source "toolchain/toolchain-buildroot/Config.in.2"
+source "toolchain/toolchain-external/Config.in.2"
+
+endmenu
