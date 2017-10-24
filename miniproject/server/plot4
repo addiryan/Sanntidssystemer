@@ -1,0 +1,55 @@
+#parameters
+interval_bw=500
+controller_response_bw=500
+signal_response_bw=500
+
+
+#Global
+set term png enhanced size 1280,1024
+set output "plot4.png"
+unset key
+set multiplot
+set size 0.5, 0.5
+
+# y(t) upper left
+set origin 0, 0.5
+set title "y(t)"
+set xlabel "t"
+set ylabel "y"
+set grid
+plot "results.dat" using 1:2 title "y" with lines
+
+# u(t) lower left
+set origin 0, 0
+set title "u(t)"
+set xlabel "t"
+set ylabel "u"
+set grid
+plot "results.dat" using 1:3 title "u" with lines
+
+# upper right
+set size 0.5, 0.5
+set origin 0.5, 0.5
+set title "Period time (interval between GET requests)"
+set xlabel "time (us)"
+set ylabel "number"
+set xrange [0:14000]
+set style fill solid border -1
+
+set boxwidth interval_bw
+bin(x,width)=width*floor(x/width)
+plot "pid_time.dat" using (bin($2,interval_bw)):(1.0) title "PID" smooth freq with boxes
+
+#lower right
+set origin 0.5, 0
+set title "Controller step time (time from GET request to new setpoint received)"
+set xlabel "time (us)"
+set ylabel "number"
+set style fill solid border -1
+
+set boxwidth controller_response_bw
+bin(x,width)=width*floor(x/width)
+plot "pid_time.dat" using (bin($3,controller_response_bw)):(1.0) title "PID" smooth freq with boxes
+
+
+unset multiplot

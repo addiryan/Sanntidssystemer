@@ -1,0 +1,18 @@
+# *******************************************************************
+
+ifeq ($(BR2_TARGET_ATMEL),y)
+ATMEL_PATH:=target/device/Atmel
+
+BOARD_NAME:=$(call qstrip,$(BR2_BOARD_NAME))
+BOARD_PATH:=$(call qstrip,$(BR2_BOARD_PATH))
+
+ifneq ($(BR2_avr32),y)
+ATMEL_TARGET:=$(ATMEL_PATH)/root
+TARGET_SKELETON:=$(ATMEL_TARGET)/target_skeleton
+TARGET_SKELETON_LINKS:=$(ATMEL_TARGET)/skel.tar.gz
+endif
+
+# Update things in board specific makefiles
+include target/device/Atmel/*/Makefile.in
+
+endif
