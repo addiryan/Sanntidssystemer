@@ -26,12 +26,12 @@ struct message_info{
 	char toServer[8];
 };
 
-struct message_info sendMessage;
-char receiveFromServer [12];
+//struct message_info sendMessage;
+//char receiveFromServer [12];
 pid_t PID;
 
 int main(int argc, char *argv[]) {
-	//set_priority(35);
+	set_priority(63);
 	struct pid_data* ptr;
 	ptr = (struct pid_data*)init_memloc();
 	const pthread_mutexattr_t myattr;
@@ -59,7 +59,8 @@ int main(int argc, char *argv[]) {
 
 void message_client(void* i){
 	//int threadNum = *((int *) i);
-
+	char receiveFromServer [12];
+	struct message_info sendMessage;
 	int channelID;
 	channelID = ConnectAttach(0, PID, 1, 0, 0);
 	sendMessage.pid = getpid();

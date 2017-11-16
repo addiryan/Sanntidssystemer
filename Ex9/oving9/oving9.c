@@ -29,7 +29,7 @@ struct msg_info{
 };
 
 struct pid_data *ptr;
-struct msg_info receiveBuf;
+//struct msg_info receiveBuf;
 
 char reply[12] = "Fuck You too";
 
@@ -49,11 +49,19 @@ int main(int argc, char *argv[]) {
 void message_server(){
 	int channelID, messageID;
 	channelID = ChannelCreate(0);
+	//channelID = ChannelCreate(_NTO_CHF_FIXED_PRIORITY);
 	while(1){
+		struct msg_info receiveBuf;
 		printf("Server priority before receive is: %d\n", get_priority());
 		messageID = MsgReceive(channelID, &receiveBuf, sizeof(receiveBuf), NULL);
 		printf("Server priority after receive is: %d\n", get_priority());
-		printf("Server received:  PID = %d, THREAD_ID = %d, text = %s\n", receiveBuf.pid, receiveBuf.thread_ID, receiveBuf.fromClient);
+		printf("MessageID = %d\n", messageID);
+		if(messageID == 2){
+			printf("Client disconnect\n");
+		}
+		else{
+			printf("Server received:  PID = %d, THREAD_ID = %d, text = %s\n", receiveBuf.pid, receiveBuf.thread_ID, receiveBuf.fromClient);
+		}
 		MsgReply(messageID, EOK, &reply, sizeof(reply));
 	}
 }
